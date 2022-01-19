@@ -5,6 +5,8 @@ Kindle Rooting instructions etc I used were found here https://matthealy.com/kin
 
 Note the mostly empty Constants.cs file, which is where I stashed all my private keys, then blanked them out before push-ing
 
+The magic happens in Pages/GenerateController.cs - invoked via /api/generate - you can also add ?force=true to bypass the caching
+
 TODO:
  - Change google auth to use a headless server account so I don't have to manually refresh the token every 7 days
  - Change the caching strategy to save "last fetched" timestamps against each of the APIs, at the minute it stronly relies on the fact that it is invoked once a minute (so, for example if you call it at 2:59pm and then 3:01pm it won't refresh the calendar, which only happens on the hour)
