@@ -50,23 +50,12 @@ namespace MagicMirror.Pages
                 }
                 result = new Calendar_Wrapper();
 
-                UserCredential credential;
+                GoogleCredential credential;
 
-                // TODO : Make this use a service account, at the minute I have to manually refresh the token
-                // every seven days!
                 using (var stream =
-                    new FileStream("credentials_desktop.json", FileMode.Open, FileAccess.Read))
+                    new FileStream("service_account_credentials.json", FileMode.Open, FileAccess.Read))
                 {
-                    // The file token.json stores the user's access and refresh tokens, and is created
-                    // automatically when the authorization flow completes for the first time.
-                    string credPath = "token.json";
-                    credential = GoogleWebAuthorizationBroker.AuthorizeAsync(
-                        GoogleClientSecrets.FromStream(stream).Secrets,
-                        Scopes,
-                        "user",
-                        CancellationToken.None,
-                        new FileDataStore(credPath, true)).Result;
-                    Console.WriteLine("Credential file saved to: " + credPath);
+                    credential = GoogleCredential.FromStream(stream).CreateScoped(Scopes);
                 }
 
                 // Create Google Calendar API service.
